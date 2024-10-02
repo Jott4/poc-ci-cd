@@ -20,7 +20,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run tests
-        run: pytest
+        run: |
+          python -m pytest
 
   lint:
     runs-on: ubuntu-latest
@@ -35,7 +36,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run linter
-        run: flake8 src tests
+        run: flake8 myproject tests
 
   deploy:
     needs: [test, lint]
@@ -53,5 +54,5 @@ jobs:
       - name: Simulate deployment
         run: |
           echo "Deploying to production..."
-          python src/main.py
+          python -c "from myproject.main import add; print(add(2, 3))"
           echo "Deployment completed!"
